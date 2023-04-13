@@ -1,0 +1,43 @@
+syntax = "proto3";
+package proto;
+option java_multiple_files = true;
+option java_package = "org.example.proto";
+option java_outer_classname = "MessProto";
+message Mess{
+  MessType type=1;
+  int32 id=2;
+  int32 serial_num=3;
+  int32 check_num=4;
+  int32 origin_id=5;
+  int32 integer1=6;
+  int32 integer2=7;
+  int32 integer3=8;
+  string str=9;
+}
+enum MessType{
+  ask_refresh=0;
+  ask_id=1;
+  ask_rb=2;
+  ask_disconnect=3;
+  win_lose=4;
+  take_chess=5;
+  move_chess=6;
+  heart_beat=7;
+  has_lose_connect=8;
+  set_chess_location=9;
+  set_chess_life=10;
+  send_message=11;
+  ask_load_chess_map=12;//请求加载棋谱
+  ask_sava_chess_map=13;//请求读取棋谱
+  set_round_and_time=14;//设置客户端的回合属性和剩余时间
+}
+enum MessArrayType{
+  normal=0;
+  refresh=1;
+  load=2;
+  save=3;
+}
+message MessArray{
+  MessArrayType type=1;
+  repeated Mess messes=2;
+}
