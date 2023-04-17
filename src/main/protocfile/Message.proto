@@ -5,7 +5,8 @@ option java_package = "org.example.proto";
 option java_outer_classname = "MessProto";
 message Mess{
   MessType type=1;
-  int32 id=2;
+  int32 id=2;//在包准备发送阶段,此值为接收方的id,发送器根据此字段准备好发送的目的地.
+  // 在即将发送时id改为本机id(发送id)接收方可根据此值知道是谁发送给自己的
   int32 serial_num=3;
   int32 check_num=4;
   int32 origin_id=5;
@@ -32,8 +33,8 @@ enum MessType{
   set_round_and_time=14;//设置客户端的回合属性和剩余时间
 }
 enum MessArrayType{
-  normal=0;
-  refresh=1;
+  normal=0;//normal就只是把一些零碎的信息打包而已
+  refresh=1;//其他的类型代表这个MessArray是一个不可分割的整体处理好直接发送
   load=2;
   save=3;
 }

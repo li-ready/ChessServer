@@ -95,6 +95,39 @@ public class GameServer implements ServerNetListener {
         System.out.println("setid="+id);
         RBset(id);
     }*/
+    public int randomId(){
+        int out=1000;
+        while((out==1000)|(out==id0)|(out==id1)) {
+            out = random.nextInt(8997);
+            out = out + 1001;
+        }
+        return out;
+    }
+    public int set_client_id_cal(int id){//待添加断线重连功能
+        boolean t=true;
+        System.out.println("set_id id:"+id);
+        for (int i : players) {
+            System.out.println("players has:"+i);
+            if(i==id){//可能是断线重连
+                /*System.out.println("has same name");
+                for (int j = 0; j < getLoseConnectPlayers().size(); j++) {
+                    {
+                        if (LoseConnectPlayers.get(j)==id){
+                            LoseConnectPlayers.remove(j);
+                        }
+                    }
+                }
+                return id;*/
+            }
+        }
+        if(players.size()<playMax){
+            int a=randomId();System.out.println("setId:"+a);
+            players.add(a);
+            return a;
+        }else{
+            return -1;
+        }
+    }
     //断线等待重连的方法
     public void LoseConnectWait(int id){//connect线程依然在运行,并调用了这个方法\
         boolean jixu=true;
@@ -139,45 +172,7 @@ public class GameServer implements ServerNetListener {
         }
        return OpPlayer;
     }
-    public int randomId(){
-        int out=1000;
-        while((out==1000)|(out==id0)|(out==id1)) {
-            out = random.nextInt(8997);
-            out = out + 1001;
-        }
-        return out;
-    }
-    //有没有这个链接记录着
-    public boolean client_id_here(int id){
-        if(id==1000)return false;
-        if((id==id0)|(id==id1))return true;
-        return false;
-    }
-    public int set_client_id_cal(int id){//待添加断线重连功能
-        boolean t=true;
-        System.out.println("set_id id:"+id);
-        for (int i : players) {
-            System.out.println("players has:"+i);
-            if(i==id){//可能是断线重连
-                System.out.println("has same name");
-                for (int j = 0; j < getLoseConnectPlayers().size(); j++) {
-                    {
-                        if (LoseConnectPlayers.get(j)==id){
-                            LoseConnectPlayers.remove(j);
-                        }
-                    }
-                }
-                return id;
-            }
-        }
-            if(players.size()<playMax){
-                int a=randomId();System.out.println("setId:"+a);
-                players.add(a);
-                return a;
-        }else{
-            return -1;
-        }
-    }
+
     public GameServer(){
         manager=null;
         RBint=new int[2];

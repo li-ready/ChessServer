@@ -3,17 +3,21 @@ package org.example.Net;
 
 import org.example.Itf.ServerNetSender;
 import org.example.Server.GameServer;
+import org.example.proto.Mess;
+import org.example.proto.MessArray;
+import org.example.proto.MessArrayType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
+import java.net.*;
+import java.util.TreeMap;
 
 public class NetManager extends Thread implements ServerNetSender {
     //private volatile boolean flag = true;
+    private MessArray.Builder messesTemp;
+    private int id=0;
     private int port=6666;
     private String inputLine;
     private String temp1;
@@ -21,63 +25,125 @@ public class NetManager extends Thread implements ServerNetSender {
     private GameServer server;
     private Thread threadClient;
     private Thread threadServer;
-    private ArrayList<ConnectThread> connects;
+    private TreeMap<Integer,ConnectAttribute> connects;//键为连接的id号,值为连接上一次发来包的时间
     //private ArrayList<Socket> sockets;
     private ServerSocket serverSocket;
     private boolean Contiune=true;
     public int intemp=0;
-    private int playNum=2;
+    private int connectsMax=2;
     private int playCount=0;
     public boolean jixuyunxing=true;//控制所有的匿名类是否继续运行
+    private DatagramSocket Insocket;
+    private DatagramSocket Outsocket;
+    private DatagramPacket InPacket;
+    private DatagramPacket OutPacket;
+    private int timeOut=0;
     public String intTOMess(int ss){
         temp1="["+ss+"]";
         return temp1;
     }
     //主逻辑
     public NetManager(GameServer server1) throws IOException, InterruptedException {
-       serverSocket=new ServerSocket(port);
-       server=server1;
+        {//数值初始化
+            id=9999;//服务器默认id
+            timeOut=3000;
+            port=6666;
+            connectsMax=2;//最多有几个连接
+        }
+        OutPacket.setPort(port);
+        messesTemp=MessArray.newBuilder();
+        Insocket =new DatagramSocket(port);
+        server=server1;
+        server.setManager(this);
+        connects=new TreeMap<Integer,ConnectAttribute>();
+    }
+    public void sendMess(Mess.Builder mess){//封装的协议,服务器和客户端调用的
 
-       server.setManager(this);
-       connects=new ArrayList<ConnectThread>();
-        while(jixuyunxing){
-            Thread.sleep(500);
-            ConnectManager();
-        }
     }
-    public synchronized void ConnectManager() throws IOException {
-        for (int i = 0; i < connects.size(); i++) {
-            if(connects.get(i).live==false)
-                connects.remove(i);
+    public void internal_sendMessArray(MessArray.Builder messes){//将id相同的mess放入同一个messArray中并发送
+        if (messes.getType() == MessArrayType.normal) {//收到的包只是零碎的信息
+            messesTemp.clear();
+            for (Integer key : connects.keySet()) {
+                for (Mess.Builder mess :messes.getMessesBuilderList()) {
+                    if(mess.getId()==key){
+                        mess.setId(id);
+                        messesTemp.addMesses(mess);
+                    }
+                }
+                OutPacket.setAddress(connects.get(key).getAddress());
+                OutPacket.setData(messesTemp.build().toByteArray());
+                try {
+                    Outsocket.send(OutPacket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        if(connects.size()<playNum){
-            connect();
-        }
-    }
-    public void MessToClient(String output,int id0){
-        System.out.println("Connect0 id:"+connects.get(0).id+"  id0:"+id0);
-        for (ConnectThread connectThread : connects) {
-            if(connectThread.id==id0){
-                System.out.println("send1");
-                connectThread.MessToClient(output);
+        else {
+            int key=messes.getMesses(0).getId();
+            for (Mess.Builder mess :messes.getMessesBuilderList()) {
+                    mess.setId(id);
+            }
+            OutPacket.setAddress(connects.get(key).getAddress());
+            OutPacket.setData(messesTemp.build().toByteArray());
+            try {
+                Outsocket.send(OutPacket);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
-    public void connect() throws IOException {
-        System.out.println("Server started. Listening on port: "+port+"...");
-        Socket socket = serverSocket.accept();
-        System.out.println("New client connected: " + socket);
-        socket.setSoTimeout(5000);
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        //添加in的引用
-        System.out.println("connect1");
-        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        //添加out的引用
-        System.out.println("connect2");
-        ConnectThread connect=new ConnectThread(in,out,socket,server);
-        connects.add(connect);
-        connect.start();//创建新线程
+    public void run() {
+        super.run();
+        System.out.println("AccpetMess from:"+id);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                while(true){
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if(cz) {
+                        time = System.currentTimeMillis(); cz=false;
+                    }
+                    deltatime=System.currentTimeMillis()-time;
+                    if(deltatime>5000){
+                        live=false;break;
+                    }
+                }
+            }
+        }.start();
+        try{
+            while (true) {
+                Insocket.receive(InPacket);
+                =InPacket.getAddress();
+                cz=true;//收到消息了,没掉线计时器重置
+                if ("Idsend00".equals(inputLine.substring(4, 12)))
+                {
+                    id=server.set_client_id_cal(Integer.parseInt(inputLine.substring(0,4)));
+                    out.println("Idset000:"+id);
+                    if(id==-1){
+                        live=false;break;
+                    }
+                }
+                else {
+                    server.getClientMess(inputLine);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error handling client: " + e.getMessage());
+            live=false;
+            server.getClientMess(id+"HasloseC:");//断线处理
+        } finally {live=false;
         }
+    }
 
+    public void MessToClient(String output){
+        System.out.println("send2");
+        out.println(output);
+    }
 }
 
