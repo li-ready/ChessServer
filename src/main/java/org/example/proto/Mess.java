@@ -61,6 +61,10 @@ private static final long serialVersionUID = 0L;
   public static final int ID_FIELD_NUMBER = 2;
   private int id_ = 0;
   /**
+   * <pre>
+   *在包准备发送阶段,此值为接收方的id,发送器根据此字段准备好发送的目的地.
+   * </pre>
+   *
    * <code>int32 id = 2;</code>
    * @return The id.
    */
@@ -72,6 +76,10 @@ private static final long serialVersionUID = 0L;
   public static final int SERIAL_NUM_FIELD_NUMBER = 3;
   private int serialNum_ = 0;
   /**
+   * <pre>
+   * 在即将发送时id改为本机id(发送id)接收方可根据此值知道是谁发送给自己的
+   * </pre>
+   *
    * <code>int32 serial_num = 3;</code>
    * @return The serialNum.
    */
@@ -188,7 +196,7 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (type_ != org.example.proto.MessType.ask_refresh.getNumber()) {
+    if (type_ != org.example.proto.MessType.ask_connect.getNumber()) {
       output.writeEnum(1, type_);
     }
     if (id_ != 0) {
@@ -224,7 +232,7 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (type_ != org.example.proto.MessType.ask_refresh.getNumber()) {
+    if (type_ != org.example.proto.MessType.ask_connect.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(1, type_);
     }
@@ -704,6 +712,10 @@ private static final long serialVersionUID = 0L;
 
     private int id_ ;
     /**
+     * <pre>
+     *在包准备发送阶段,此值为接收方的id,发送器根据此字段准备好发送的目的地.
+     * </pre>
+     *
      * <code>int32 id = 2;</code>
      * @return The id.
      */
@@ -712,6 +724,10 @@ private static final long serialVersionUID = 0L;
       return id_;
     }
     /**
+     * <pre>
+     *在包准备发送阶段,此值为接收方的id,发送器根据此字段准备好发送的目的地.
+     * </pre>
+     *
      * <code>int32 id = 2;</code>
      * @param value The id to set.
      * @return This builder for chaining.
@@ -724,6 +740,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     *在包准备发送阶段,此值为接收方的id,发送器根据此字段准备好发送的目的地.
+     * </pre>
+     *
      * <code>int32 id = 2;</code>
      * @return This builder for chaining.
      */
@@ -736,6 +756,10 @@ private static final long serialVersionUID = 0L;
 
     private int serialNum_ ;
     /**
+     * <pre>
+     * 在即将发送时id改为本机id(发送id)接收方可根据此值知道是谁发送给自己的
+     * </pre>
+     *
      * <code>int32 serial_num = 3;</code>
      * @return The serialNum.
      */
@@ -744,6 +768,10 @@ private static final long serialVersionUID = 0L;
       return serialNum_;
     }
     /**
+     * <pre>
+     * 在即将发送时id改为本机id(发送id)接收方可根据此值知道是谁发送给自己的
+     * </pre>
+     *
      * <code>int32 serial_num = 3;</code>
      * @param value The serialNum to set.
      * @return This builder for chaining.
@@ -756,6 +784,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * 在即将发送时id改为本机id(发送id)接收方可根据此值知道是谁发送给自己的
+     * </pre>
+     *
      * <code>int32 serial_num = 3;</code>
      * @return This builder for chaining.
      */

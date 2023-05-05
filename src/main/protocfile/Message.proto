@@ -14,10 +14,11 @@ message Mess{
   int32 integer2=7;
   int32 integer3=8;
   string str=9;
+  bool isCheck=10;//是不是验证包
 }
 enum MessType{
-  ask_refresh=0;
-  ask_id=1;
+  ask_connect=0;//特殊
+  ask_refresh=1;
   ask_rb=2;
   ask_disconnect=3;
   win_lose=4;
@@ -27,18 +28,14 @@ enum MessType{
   has_lose_connect=8;
   set_chess_location=9;
   set_chess_life=10;
-  send_message=11;
-  ask_load_chess_map=12;//请求加载棋谱
-  ask_sava_chess_map=13;//请求读取棋谱
-  set_round_and_time=14;//设置客户端的回合属性和剩余时间
-}
-enum MessArrayType{
-  normal=0;//normal就只是把一些零碎的信息打包而已
-  refresh=1;//其他的类型代表这个MessArray是一个不可分割的整体处理好直接发送
-  load=2;
-  save=3;
+  load=11;//当读取到MessArray中的load时,Integer1为refresh数组的长度,连续读取integer1个mess为一个整体
+  save=12;//当读取到MessArray中的save时,Integer1为refresh数组的长度,连续读取integer1个mess为一个整体
+  set_round_and_time=13;//设置客户端的回合属性和剩余时间
+  refresh=14;//当读取到MessArray中的refresh时,Integer1为refresh数组的长度,连续读取integer1个mess为一个整体
+  send_message=15;//聊天功能
 }
 message MessArray{
-  MessArrayType type=1;
-  repeated Mess messes=2;
+  int64 SourceTime=1;//发送方上一次的时间戳
+  int32 EchoTime=2;//接收方上一次的时间差
+  repeated Mess messes=3;
 }

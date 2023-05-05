@@ -8,17 +8,6 @@ public interface MessArrayOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.proto.MessArrayType type = 1;</code>
-   * @return The enum numeric value on the wire for type.
-   */
-  int getTypeValue();
-  /**
-   * <code>.proto.MessArrayType type = 1;</code>
-   * @return The type.
-   */
-  org.example.proto.MessArrayType getType();
-
-  /**
    * <code>repeated .proto.Mess messes = 2;</code>
    */
   java.util.List<org.example.proto.Mess> 

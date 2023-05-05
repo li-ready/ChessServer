@@ -9,10 +9,18 @@ package org.example.proto;
 public enum MessArrayType
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
+   * <pre>
+   *normal就只是把一些零碎的信息打包而已
+   * </pre>
+   *
    * <code>normal = 0;</code>
    */
   normal(0),
   /**
+   * <pre>
+   *其他的类型代表这个MessArray是一个不可分割的整体处理好直接发送
+   * </pre>
+   *
    * <code>refresh = 1;</code>
    */
   refresh(1),
@@ -28,10 +36,18 @@ public enum MessArrayType
   ;
 
   /**
+   * <pre>
+   *normal就只是把一些零碎的信息打包而已
+   * </pre>
+   *
    * <code>normal = 0;</code>
    */
   public static final int normal_VALUE = 0;
   /**
+   * <pre>
+   *其他的类型代表这个MessArray是一个不可分割的整体处理好直接发送
+   * </pre>
+   *
    * <code>refresh = 1;</code>
    */
   public static final int refresh_VALUE = 1;

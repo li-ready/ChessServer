@@ -19,12 +19,20 @@ public interface MessOrBuilder extends
   org.example.proto.MessType getType();
 
   /**
+   * <pre>
+   *在包准备发送阶段,此值为接收方的id,发送器根据此字段准备好发送的目的地.
+   * </pre>
+   *
    * <code>int32 id = 2;</code>
    * @return The id.
    */
   int getId();
 
   /**
+   * <pre>
+   * 在即将发送时id改为本机id(发送id)接收方可根据此值知道是谁发送给自己的
+   * </pre>
+   *
    * <code>int32 serial_num = 3;</code>
    * @return The serialNum.
    */

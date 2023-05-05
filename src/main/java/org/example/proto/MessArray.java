@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private MessArray() {
-    type_ = 0;
     messes_ = java.util.Collections.emptyList();
   }
 
@@ -38,24 +37,6 @@ private static final long serialVersionUID = 0L;
     return org.example.proto.MessProto.internal_static_proto_MessArray_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             org.example.proto.MessArray.class, org.example.proto.MessArray.Builder.class);
-  }
-
-  public static final int TYPE_FIELD_NUMBER = 1;
-  private int type_ = 0;
-  /**
-   * <code>.proto.MessArrayType type = 1;</code>
-   * @return The enum numeric value on the wire for type.
-   */
-  @java.lang.Override public int getTypeValue() {
-    return type_;
-  }
-  /**
-   * <code>.proto.MessArrayType type = 1;</code>
-   * @return The type.
-   */
-  @java.lang.Override public org.example.proto.MessArrayType getType() {
-    org.example.proto.MessArrayType result = org.example.proto.MessArrayType.forNumber(type_);
-    return result == null ? org.example.proto.MessArrayType.UNRECOGNIZED : result;
   }
 
   public static final int MESSES_FIELD_NUMBER = 2;
@@ -113,9 +94,6 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (type_ != org.example.proto.MessArrayType.normal.getNumber()) {
-      output.writeEnum(1, type_);
-    }
     for (int i = 0; i < messes_.size(); i++) {
       output.writeMessage(2, messes_.get(i));
     }
@@ -128,10 +106,6 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (type_ != org.example.proto.MessArrayType.normal.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(1, type_);
-    }
     for (int i = 0; i < messes_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(2, messes_.get(i));
@@ -151,7 +125,6 @@ private static final long serialVersionUID = 0L;
     }
     org.example.proto.MessArray other = (org.example.proto.MessArray) obj;
 
-    if (type_ != other.type_) return false;
     if (!getMessesList()
         .equals(other.getMessesList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -165,8 +138,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + type_;
     if (getMessesCount() > 0) {
       hash = (37 * hash) + MESSES_FIELD_NUMBER;
       hash = (53 * hash) + getMessesList().hashCode();
@@ -300,14 +271,13 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      type_ = 0;
       if (messesBuilder_ == null) {
         messes_ = java.util.Collections.emptyList();
       } else {
         messes_ = null;
         messesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -342,9 +312,9 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartialRepeatedFields(org.example.proto.MessArray result) {
       if (messesBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           messes_ = java.util.Collections.unmodifiableList(messes_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.messes_ = messes_;
       } else {
@@ -354,9 +324,6 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartial0(org.example.proto.MessArray result) {
       int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.type_ = type_;
-      }
     }
 
     @java.lang.Override
@@ -371,14 +338,11 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(org.example.proto.MessArray other) {
       if (other == org.example.proto.MessArray.getDefaultInstance()) return this;
-      if (other.type_ != 0) {
-        setTypeValue(other.getTypeValue());
-      }
       if (messesBuilder_ == null) {
         if (!other.messes_.isEmpty()) {
           if (messes_.isEmpty()) {
             messes_ = other.messes_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureMessesIsMutable();
             messes_.addAll(other.messes_);
@@ -391,7 +355,7 @@ private static final long serialVersionUID = 0L;
             messesBuilder_.dispose();
             messesBuilder_ = null;
             messes_ = other.messes_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
             messesBuilder_ = 
               com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                  getMessesFieldBuilder() : null;
@@ -426,11 +390,6 @@ private static final long serialVersionUID = 0L;
             case 0:
               done = true;
               break;
-            case 8: {
-              type_ = input.readEnum();
-              bitField0_ |= 0x00000001;
-              break;
-            } // case 8
             case 18: {
               org.example.proto.Mess m =
                   input.readMessage(
@@ -461,65 +420,12 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private int type_ = 0;
-    /**
-     * <code>.proto.MessArrayType type = 1;</code>
-     * @return The enum numeric value on the wire for type.
-     */
-    @java.lang.Override public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <code>.proto.MessArrayType type = 1;</code>
-     * @param value The enum numeric value on the wire for type to set.
-     * @return This builder for chaining.
-     */
-    public Builder setTypeValue(int value) {
-      type_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>.proto.MessArrayType type = 1;</code>
-     * @return The type.
-     */
-    @java.lang.Override
-    public org.example.proto.MessArrayType getType() {
-      org.example.proto.MessArrayType result = org.example.proto.MessArrayType.forNumber(type_);
-      return result == null ? org.example.proto.MessArrayType.UNRECOGNIZED : result;
-    }
-    /**
-     * <code>.proto.MessArrayType type = 1;</code>
-     * @param value The type to set.
-     * @return This builder for chaining.
-     */
-    public Builder setType(org.example.proto.MessArrayType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000001;
-      type_ = value.getNumber();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>.proto.MessArrayType type = 1;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearType() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      type_ = 0;
-      onChanged();
-      return this;
-    }
-
     private java.util.List<org.example.proto.Mess> messes_ =
       java.util.Collections.emptyList();
     private void ensureMessesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000001) != 0)) {
         messes_ = new java.util.ArrayList<org.example.proto.Mess>(messes_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
        }
     }
 
@@ -669,7 +575,7 @@ private static final long serialVersionUID = 0L;
     public Builder clearMesses() {
       if (messesBuilder_ == null) {
         messes_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
       } else {
         messesBuilder_.clear();
@@ -746,7 +652,7 @@ private static final long serialVersionUID = 0L;
         messesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             org.example.proto.Mess, org.example.proto.Mess.Builder, org.example.proto.MessOrBuilder>(
                 messes_,
-                ((bitField0_ & 0x00000002) != 0),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         messes_ = null;

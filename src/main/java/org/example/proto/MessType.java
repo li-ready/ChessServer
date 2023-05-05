@@ -9,13 +9,13 @@ package org.example.proto;
 public enum MessType
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>ask_refresh = 0;</code>
+   * <code>ask_connect = 0;</code>
    */
-  ask_refresh(0),
+  ask_connect(0),
   /**
-   * <code>ask_id = 1;</code>
+   * <code>ask_refresh = 1;</code>
    */
-  ask_id(1),
+  ask_refresh(1),
   /**
    * <code>ask_rb = 2;</code>
    */
@@ -80,17 +80,41 @@ public enum MessType
    * <code>set_round_and_time = 14;</code>
    */
   set_round_and_time(14),
+  /**
+   * <pre>
+   *放在messArray首部,代表这个messes是一个整体为refresh包
+   * </pre>
+   *
+   * <code>refresh = 15;</code>
+   */
+  refresh(15),
+  /**
+   * <pre>
+   *放在messArray首部,代表这个messes是一个整体为load包
+   * </pre>
+   *
+   * <code>load = 16;</code>
+   */
+  load(16),
+  /**
+   * <pre>
+   *放在messArray首部,代表这个messes是一个整体为save包
+   * </pre>
+   *
+   * <code>save = 17;</code>
+   */
+  save(17),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>ask_refresh = 0;</code>
+   * <code>ask_connect = 0;</code>
    */
-  public static final int ask_refresh_VALUE = 0;
+  public static final int ask_connect_VALUE = 0;
   /**
-   * <code>ask_id = 1;</code>
+   * <code>ask_refresh = 1;</code>
    */
-  public static final int ask_id_VALUE = 1;
+  public static final int ask_refresh_VALUE = 1;
   /**
    * <code>ask_rb = 2;</code>
    */
@@ -155,6 +179,30 @@ public enum MessType
    * <code>set_round_and_time = 14;</code>
    */
   public static final int set_round_and_time_VALUE = 14;
+  /**
+   * <pre>
+   *放在messArray首部,代表这个messes是一个整体为refresh包
+   * </pre>
+   *
+   * <code>refresh = 15;</code>
+   */
+  public static final int refresh_VALUE = 15;
+  /**
+   * <pre>
+   *放在messArray首部,代表这个messes是一个整体为load包
+   * </pre>
+   *
+   * <code>load = 16;</code>
+   */
+  public static final int load_VALUE = 16;
+  /**
+   * <pre>
+   *放在messArray首部,代表这个messes是一个整体为save包
+   * </pre>
+   *
+   * <code>save = 17;</code>
+   */
+  public static final int save_VALUE = 17;
 
 
   public final int getNumber() {
@@ -181,8 +229,8 @@ public enum MessType
    */
   public static MessType forNumber(int value) {
     switch (value) {
-      case 0: return ask_refresh;
-      case 1: return ask_id;
+      case 0: return ask_connect;
+      case 1: return ask_refresh;
       case 2: return ask_rb;
       case 3: return ask_disconnect;
       case 4: return win_lose;
@@ -196,6 +244,9 @@ public enum MessType
       case 12: return ask_load_chess_map;
       case 13: return ask_sava_chess_map;
       case 14: return set_round_and_time;
+      case 15: return refresh;
+      case 16: return load;
+      case 17: return save;
       default: return null;
     }
   }

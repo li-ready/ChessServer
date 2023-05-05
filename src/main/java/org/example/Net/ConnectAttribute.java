@@ -5,45 +5,35 @@ import java.util.*;
 
 //int最大20,0000,0000
 public class ConnectAttribute {
-    boolean rebirth = false;//当其为false则默认收到的序列号之前的序列都确认过了
+    //boolean rebirth = false;//当其为false则默认收到的序列号之前的序列都确认过了
     int lastGetTime = 0;
-    int TimeOutnum=0;
-
+    static int TimeOutnum;//连接超时时间
+    InetAddress address;
     public InetAddress getAddress() {
         return address;
     }
-
     public void setAddress(InetAddress address) {
         this.address = address;
     }
-
-    InetAddress address;
-    int currentSerialNum = 0;
-    ArrayList<Integer> serialNumCheck;
-    TreeMap<Integer,Integer> serialWaitCheck;
-
-    public ConnectAttribute(int defaultTimeOut,InetAddress address1) {
+    public ConnectAttribute(InetAddress address1) {
         address=address1;
-        TimeOutnum=defaultTimeOut;//设定超时的时间
         serialNumCheck = new ArrayList<Integer>();
         for (int a : serialNumCheck) {
             a = 0;
         }
         serialWaitCheck = new TreeMap<Integer, Integer>();
     }
-
     public void ClearLastTime() {
         lastGetTime = 0;
     }
     public int getLastGetTime(){
         return lastGetTime;
     }
-    public void addLastTime(int a) {
-        lastGetTime += a;
-        for (Integer i : serialWaitCheck.values()) {
-            i+=a;
-        }
-    }
+    int currentSerialNum = 0;
+    ArrayList<Integer> serialNumCheck;
+    TreeMap<Integer,Integer> serialWaitCheck;
+
+
     public int GetConnectStatus(){
         if(lastGetTime>TimeOutnum){return -1;}
         for (Map.Entry<Integer,Integer> a : serialWaitCheck.entrySet()) {
@@ -53,7 +43,7 @@ public class ConnectAttribute {
         }
         return 0;
     }
-    public void disconnect() {
+    /*public void disconnect() {
         rebirth = false;
     }
 
@@ -90,5 +80,5 @@ public class ConnectAttribute {
             serialNumCheck.clear();
             serialWaitCheck.clear();
         }
-    }
+    }*/
 }

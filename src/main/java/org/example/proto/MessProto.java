@@ -38,18 +38,17 @@ public final class MessProto {
       "rial_num\030\003 \001(\005\022\021\n\tcheck_num\030\004 \001(\005\022\021\n\tori" +
       "gin_id\030\005 \001(\005\022\020\n\010integer1\030\006 \001(\005\022\020\n\010intege" +
       "r2\030\007 \001(\005\022\020\n\010integer3\030\010 \001(\005\022\013\n\003str\030\t \001(\t\"" +
-      "L\n\tMessArray\022\"\n\004type\030\001 \001(\0162\024.proto.MessA" +
-      "rrayType\022\033\n\006messes\030\002 \003(\0132\013.proto.Mess*\241\002" +
-      "\n\010MessType\022\017\n\013ask_refresh\020\000\022\n\n\006ask_id\020\001\022" +
-      "\n\n\006ask_rb\020\002\022\022\n\016ask_disconnect\020\003\022\014\n\010win_l" +
-      "ose\020\004\022\016\n\ntake_chess\020\005\022\016\n\nmove_chess\020\006\022\016\n" +
-      "\nheart_beat\020\007\022\024\n\020has_lose_connect\020\010\022\026\n\022s" +
-      "et_chess_location\020\t\022\022\n\016set_chess_life\020\n\022" +
-      "\020\n\014send_message\020\013\022\026\n\022ask_load_chess_map\020" +
-      "\014\022\026\n\022ask_sava_chess_map\020\r\022\026\n\022set_round_a" +
-      "nd_time\020\016*<\n\rMessArrayType\022\n\n\006normal\020\000\022\013" +
-      "\n\007refresh\020\001\022\010\n\004load\020\002\022\010\n\004save\020\003B \n\021org.e" +
-      "xample.protoB\tMessProtoP\001b\006proto3"
+      "(\n\tMessArray\022\033\n\006messes\030\002 \003(\0132\013.proto.Mes" +
+      "s*\307\002\n\010MessType\022\017\n\013ask_connect\020\000\022\017\n\013ask_r" +
+      "efresh\020\001\022\n\n\006ask_rb\020\002\022\022\n\016ask_disconnect\020\003" +
+      "\022\014\n\010win_lose\020\004\022\016\n\ntake_chess\020\005\022\016\n\nmove_c" +
+      "hess\020\006\022\016\n\nheart_beat\020\007\022\024\n\020has_lose_conne" +
+      "ct\020\010\022\026\n\022set_chess_location\020\t\022\022\n\016set_ches" +
+      "s_life\020\n\022\020\n\014send_message\020\013\022\026\n\022ask_load_c" +
+      "hess_map\020\014\022\026\n\022ask_sava_chess_map\020\r\022\026\n\022se" +
+      "t_round_and_time\020\016\022\013\n\007refresh\020\017\022\010\n\004load\020" +
+      "\020\022\010\n\004save\020\021B \n\021org.example.protoB\tMessPr" +
+      "otoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -66,7 +65,7 @@ public final class MessProto {
     internal_static_proto_MessArray_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_MessArray_descriptor,
-        new java.lang.String[] { "Type", "Messes", });
+        new java.lang.String[] { "Messes", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
